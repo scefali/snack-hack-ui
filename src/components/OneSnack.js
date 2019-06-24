@@ -7,14 +7,14 @@ import * as api from '../api';
 class OneSnack extends React.Component {
     state = {liked: false}
     componentDidMount() {
-        const { snack } = this.props;
+        const {snack} = this.props;
         this.setState({liked: snack.user_liked, like_count: snack.like_count})
     }
     async toggleLike() {
         const newCount = this.state.liked ? this.state.like_count - 1 : this.state.like_count + 1;
         const fn = this.state.liked ? api.unlikeSnack : api.likeSnack;
-        await fn(this.props.snack.id)
         this.setState({liked: !this.state.liked, like_count: newCount})
+        await fn(this.props.snack.id)
     }
 
     render() {
