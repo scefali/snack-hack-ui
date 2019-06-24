@@ -13,7 +13,7 @@ class Signup extends React.Component {
         }
         const { session_token } = await finishOauth(code) || {};
         sessionStorage.setItem('session_token', session_token);
-        window.location.replace(`${window.location.origin}/products`)
+        window.location.replace(`${window.location.origin}/snacks`)
     }
     render() {
         const message = this.state.error || 'Please wait...';

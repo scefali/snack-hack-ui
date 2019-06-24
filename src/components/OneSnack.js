@@ -6,23 +6,30 @@ import * as api from '../api';
 
 class OneSnack extends React.Component {
     state = {liked: false}
+    componentDidMount() {
+        const { snack } = this.props;
+        this.setState({liked: snack.user_liked, like_count: snack.like_count})
+    }
     async toggleLike() {
+        const newCount = this.state.liked ? this.state.like_count - 1 : this.state.like_count + 1;
         const fn = this.state.liked ? api.unlikeSnack : api.likeSnack;
-        await fn({snack_id: this.props.snack.id})
-        this.setState({liked: !this.state.liked})
+        await fn(this.props.snack.id)
+        this.setState({liked: !this.state.liked, like_count: newCount})
     }
 
     render() {
+        const {liked, like_count} = this.state;
         const {image, name} = this.props.snack;
-        const text = this.state.liked ? 'Unlike' : 'Like'
-        const extraClass = this.state.liked ? 'already-liked' : '';
+        const text = liked ? 'Unlike' : 'Like'
+        const extraClass = liked ? 'already-liked' : '';
         return (
             <Container>
                 <ItemImage src={image} />
                 <ItemLabel>{name}</ItemLabel>
-                <div class="like-content">
-                    <button class="btn-secondary like-review" onClick={() => this.toggleLike()}>
-                        <i class={`fa fa-heart ${extraClass}`} />{text}
+                {like_count}
+                <div className="like-content">
+                    <button className="btn-secondary like-review" onClick={() => this.toggleLike()}>
+                        <i className={`fa fa-heart ${extraClass}`} />{text}
                     </button>
                 </div>
             </Container>
@@ -56,3 +63,4 @@ const ItemImage = styled.img`
 
 
 export default OneSnack;
+

@@ -8442,6 +8442,11 @@ react-dom@^16.8.6:
     prop-types "^15.6.2"
     scheduler "^0.13.6"
 
+react-error-handler@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-error-handler/-/react-error-handler-1.1.0.tgz#0545bc15fd229381b549e40ec83bbd319ae39247"
+  integrity sha512-m0d/sf5BGbH3BU+R0gzUt6WIInPkL0wT3d42FlSuW8xv2H46E3Q5/Jjwj+kCxcK+iePGYlrKyIabQ2r7jjtrpg==
+
 react-error-overlay@^5.1.6:
   version "5.1.6"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-5.1.6.tgz#0cd73407c5d141f9638ae1e0c63e7b2bf7e9929d"

@@ -3,9 +3,6 @@ import styled from 'styled-components';
 
 import { getSnacks } from '../api';
 
-import kettleChips from '../images/kettle_chips.jpg'
-import proteinBars from '../images/protein_bars.jpg'
-import realFruitYoyo from '../images/real_fruit_yoyo.jpg'
 import OneProduct from './OneSnack';
 
 
@@ -18,7 +15,7 @@ class Snacks extends React.Component {
 
     renderSnack(snack) {
         return (
-            <OneProduct snack={snack} />
+            <OneProduct key={snack.id} snack={snack} />
         )
     }
 
