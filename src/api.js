@@ -1,15 +1,34 @@
 import axios from 'axios';
+import { getSessionToken } from './util';
 
+export const serverUrl = 'https://b110aa2b.ngrok.io';
+export const redirect_uri = `${window.location.origin}/oauth`;
 
-const serverUrl = '';
-export const redirect_uri = 'https://scefali.ngrok.io/oauth'
-
+const sessionToken = getSessionToken();
+const headers ={"Content-Type": "application/json"};
+if (sessionToken) {
+    headers.session_token = sessionToken;
+} 
 const serverApi = axios.create({
-    baseURL: serverUrl
+    baseURL: serverUrl,
+    headers
 });
 
 
 export const finishOauth = async code => {
-    const { data } = await serverApi.post('/', {code, redirect_uri});
-    console.log('auth data', data)
+    const { data } = await serverApi.post('/code', {code, redirect_uri});
+    return data;
+}
+
+export const getSnacks = async () => {
+    const { data } = await serverApi.get('/products');
+    return data.snacks;
+}
+
+export const likeSnack = async (snack_id) => {
+    await serverApi.post('/like', {snack_id});
+}
+
+export const unlikeSnack = async (snack_id) => {
+    await serverApi.post('/unlike', {snack_id});
 }

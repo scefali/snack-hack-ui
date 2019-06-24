@@ -1,7 +1,7 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container'
-import Button from 'react-bootstrap/Button'
 import buildUrl from 'build-url';
+import slackSignIn from '../images/sign_in_with_slack.png';
+import styled from 'styled-components';
 
 
 import {redirect_uri} from '../api';
@@ -17,18 +17,39 @@ class Signup extends React.Component {
                 redirect_uri
             }
         });
-        console.log('oauth url', url)
         window.location.replace(url);
     }
     render() {
         return (
             <Container>
-                <Button onClick={() => this.signIn()} variant="primary" size="lg" >Sign In</Button>
+                <LoginHeader>Snack Hack Login</LoginHeader>
+                <LoginImage onClick={() => this.signIn()} src={slackSignIn} />
             </Container>
         )
     }
 }
 
+
+
+const LoginImage = styled.img`
+    cursor: pointer;
+    width: 200px;
+`;
+
+const LoginHeader = styled.h2`
+    padding: 15px;
+    color: #2f73bd;
+`;
+
+const Container = styled.div`
+    max-width: 1200px;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 50px;
+`;
 
 
 export default Signup;
