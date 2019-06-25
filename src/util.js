@@ -10,5 +10,5 @@ export const relativeRedirect = url => {
     if (!url.startsWith('/')) {
         url = '/' + url;
     }
-    window.location.replace(`${window.location.origin}${url}`)
+    window.location = (`${window.location.origin}${url}`)
 }

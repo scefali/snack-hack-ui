@@ -13,7 +13,7 @@ class Signup extends React.Component {
             path: 'oauth/authorize',
             queryParams: {
                 client_id: '2169437334.672763992981',
-                scope: 'chat:write:bot',
+                scope: 'identity.basic identity.avatar',
                 redirect_uri
             }
         });

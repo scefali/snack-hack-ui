@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getSessionToken } from './util';
 
-// export let serverUrl = 'https://7201b966.ngrok.io';
+// export let serverUrl = 'https://7d98d40e.ngrok.io';
 export let serverUrl = 'https://snackhack-server.herokuapp.com';
 export const redirect_uri = `${window.location.origin}/oauth`;
 

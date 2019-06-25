@@ -29,7 +29,7 @@ class App extends React.Component {
     }
     return (
       <LogoutContainer >
-        <Button variant="outline-primary" onClick={() => this.logout()}>Logout</Button >
+        <Button id="logout-button" variant="outline-primary" onClick={() => this.logout()}>Logout</Button >
       </LogoutContainer>
     )
   }
@@ -38,15 +38,17 @@ class App extends React.Component {
     return (
       <div className="App">
         {this.renderLogout()}
-        <Router>
-          <Switch>
-            <Route path="/oauth" component={Oauth} />
-            <Route path="/snacks/:snackId" component={SnackOverview} />
-            <Route path="/snacks" component={Snacks} />
-            <Route path="/signup" component={Signup} />
-            <Redirect to={redirectUrl} />
-          </Switch>
-        </Router>
+        <Container>
+          <Router>
+            <Switch>
+              <Route path="/oauth" component={Oauth} />
+              <Route path="/snacks/:snackId" component={SnackOverview} />
+              <Route path="/snacks" component={Snacks} />
+              <Route path="/signup" component={Signup} />
+              <Redirect to={redirectUrl} />
+            </Switch>
+          </Router>
+        </Container>
       </div>
     );
   }
@@ -55,9 +57,20 @@ class App extends React.Component {
 export default App;
 
 
+// const LogoutContainer = styled.div`
+//   float: right;
+//   margin-right: 100px;
+//   position: absolute;
+// `;
+
 const LogoutContainer = styled.div`
-  float: right;
-  margin-right: 100px;
+  right: 3%;
+  top: 3%;
+  position: absolute;
+`;
+
+const Container = styled.div`
+  width: 90%;
 `;
 
 const LogoutButton = styled.button`
