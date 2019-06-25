@@ -2,39 +2,44 @@ import React from 'react';
 import styled from 'styled-components';
 
 import * as api from '../api';
+import {relativeRedirect} from '../util';
 
 
 class OneSnack extends React.Component {
-    state = {liked: false}
-    componentDidMount() {
-        const {snack} = this.props;
-        this.setState({liked: snack.user_liked, like_count: snack.like_count})
-    }
-    async toggleLike() {
-        const newCount = this.state.liked ? this.state.like_count - 1 : this.state.like_count + 1;
-        const fn = this.state.liked ? api.unlikeSnack : api.likeSnack;
-        this.setState({liked: !this.state.liked, like_count: newCount})
-        await fn(this.props.snack.id)
-    }
+  state = {liked: false}
+  componentDidMount() {
+    const {snack} = this.props;
+    this.setState({liked: snack.user_liked, like_count: snack.like_count})
+  }
+  async toggleLike() {
+    const newCount = this.state.liked ? this.state.like_count - 1 : this.state.like_count + 1;
+    const fn = this.state.liked ? api.unlikeSnack : api.likeSnack;
+    this.setState({liked: !this.state.liked, like_count: newCount})
+    await fn(this.props.snack.id)
+  }
 
-    render() {
-        const {liked, like_count} = this.state;
-        const {image, name} = this.props.snack;
-        const text = liked ? 'Unlike' : 'Like'
-        const extraClass = liked ? 'already-liked' : '';
-        return (
-            <Container>
-                <ItemImage src={image} />
-                <ItemLabel>{name}</ItemLabel>
-                {like_count}
-                <div className="like-content">
-                    <button className="btn-secondary like-review" onClick={() => this.toggleLike()}>
-                        <i className={`fa fa-heart ${extraClass}`} />{text}
-                    </button>
-                </div>
-            </Container>
-        )
-    }
+  goToSnackOverview() {
+    relativeRedirect(`snacks/${this.props.snack.id}`);
+  }
+
+  render() {
+    const {liked, like_count} = this.state;
+    const {image, name} = this.props.snack;
+    const text = liked ? 'Unlike' : 'Like'
+    const extraClass = liked ? 'already-liked' : '';
+    return (
+      <Container >
+        <ItemImage onClick={() => this.goToSnackOverview()} src={image} />
+        <ItemLabel onClick={() => this.goToSnackOverview()}>{name}</ItemLabel>
+        {like_count}
+        <div className="like-content">
+          <button className="btn-secondary like-review" onClick={() => this.toggleLike()}>
+            <i className={`fa fa-heart ${extraClass}`} />{text}
+          </button>
+        </div>
+      </Container>
+    )
+  }
 }
 
 
@@ -47,18 +52,32 @@ const Container = styled.div`
     box-shadow: 10px 10px #dadada;
     width: 230px;
     height: 275px;
-    position: relative
+    position: relative;
+    border-radius: 12px;
+    &:hover {
+        transform: scale(1.05, 1.05);
+    }
 `;
 
 const ItemLabel = styled.label`
     font-weight: bold;
     display: block;
+    &:hover {
+        cursor: pointer;
+    }
 `;
 
 const ItemImage = styled.img`
     max-height: 130px;
+    max-width: 200px;
+    &:hover {
+        cursor: pointer;
+    }
 `;
 
+
+const BottomContent = styled.div`
+`;
 
 
 

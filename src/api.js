@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { getSessionToken } from './util';
 
-export let serverUrl = 'https://b110aa2b.ngrok.io';
+// export let serverUrl = 'https://7201b966.ngrok.io';
+export let serverUrl = 'https://snackhack-server.herokuapp.com';
 export const redirect_uri = `${window.location.origin}/oauth`;
 
 const serverUrlOvr = localStorage.getItem('serverUrl');
@@ -36,4 +37,9 @@ export const likeSnack = async (snack_id) => {
 
 export const unlikeSnack = async (snack_id) => {
     await serverApi.post('/unlike', {snack_id});
+}
+
+export const getSnackInfo = async snackId => {
+  const { data } = await serverApi.get(`/snacks/${snackId}`);
+  return data.snack;
 }
