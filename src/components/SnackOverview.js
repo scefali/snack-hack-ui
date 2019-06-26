@@ -144,7 +144,10 @@ class OneSnack extends React.Component {
         <Holder>
           <SnackContainer>
             <ItemHeader>{snack.name}</ItemHeader>
-            <ItemImage src={snack.image} />
+            <ItemImageHolder>
+                {/* <i className="fa fa-heart" /> */}
+              <ItemImage src={snack.image} />
+            </ItemImageHolder>
             <ItemLabel>{snack.full_name}</ItemLabel>
             <Button onClick={() => this.requestItem()} disabled={requested} variant={variant} >{buttonStr}</Button>
 
@@ -206,11 +209,14 @@ const ItemLabel = styled.div`
   margin: 10px;
 `;
 
+const ItemImageHolder = styled.div`
+`;
+
 const ItemImage = styled.img`
-  display: block;
-  max-height: 400px;
-  max-width: 400px;
-  margin:auto;
+display: block;
+max-height: 400px;
+max-width: 400px;
+margin:auto;
 `;
 
 
@@ -223,7 +229,7 @@ const Avatar = styled.img`
 
 const ProgressBarHolder = styled.div`
   width: 600px;
-  margin: 40px;
+  margin-top: 30px;
 `;
 
 const HolderHolder = styled.div`

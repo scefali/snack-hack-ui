@@ -15,6 +15,11 @@ import Orders from './components/Orders'
 
 class App extends React.Component {
   componentDidMount() {
+    //redirect if not on https
+    if (window.location.hostname !== 'localhost' && window.location.protocol === 'http:') {
+      window.location = `https://${window.location.hostname}`;
+    }
+
     //redirect if not logged in on a product page
     if (!['/oauth', '/signup'].includes(window.location.pathname)) {
       if (!getSessionToken()) {
