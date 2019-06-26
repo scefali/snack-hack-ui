@@ -31,8 +31,10 @@ class OneSnack extends React.Component {
     return (
       <Container >
         <ItemImage onClick={() => this.goToSnackOverview()} src={image} />
-        <ItemLabel onClick={() => this.goToSnackOverview()}>{name}</ItemLabel>
-        {like_count}
+        <TextHolder>
+          <ItemLabel onClick={() => this.goToSnackOverview()}>{name}</ItemLabel>
+          {like_count}
+        </TextHolder>
         <SnackLike onClick={() => this.toggleLike()} liked={liked} />
       </Container>
     )
@@ -73,7 +75,7 @@ const ItemImage = styled.img`
 `;
 
 
-const BottomContent = styled.div`
+const TextHolder = styled.div`
 `;
 
 

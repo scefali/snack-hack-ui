@@ -2,8 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import autobind from 'class-autobind';
 import forEach from 'lodash/forEach'
-import moment from 'moment';
-
 import {getSnacks, deliverSnacks} from '../api';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';

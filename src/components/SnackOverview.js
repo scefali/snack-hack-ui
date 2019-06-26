@@ -1,8 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
+import moment from 'moment';
+import "react-step-progress-bar/styles.css";
+import {ProgressBar, Step} from "react-step-progress-bar";
+
 
 import * as api from '../api';
+import popcorn from '../images/popcorn.png';
+import truck from '../images/truck.png';
+import mailbox from '../images/mailbox.png';
 
 
 class OneSnack extends React.Component {
@@ -14,7 +21,12 @@ class OneSnack extends React.Component {
   get snackId() {
     return this.props.match.params.snackId;
   }
+
   async componentDidMount() {
+    await this.loadSnack();
+  }
+
+  async loadSnack() {
     const snackId = this.snackId;
     const snack = await api.getSnackInfo(snackId);
     const requested = ['ORDERED', 'REQUESTED'].indexOf(snack.current_state) > -1;
@@ -22,9 +34,11 @@ class OneSnack extends React.Component {
     this.setState({snack, requested, liked})
   }
 
+
   async requestItem() {
     this.setState({requested: true});
-    await api.requestSnack(this.snackId)
+    await api.requestSnack(this.snackId);
+    await this.loadSnack();
   }
 
 
@@ -35,6 +49,87 @@ class OneSnack extends React.Component {
         {userLike.name}
       </OneLikeContainer>
     )
+  }
+
+  renderProgressBar() {
+    const {snack} = this.state;
+    let percent, word, showOrdered = false, showDelivered = false;
+    switch (snack.current_state) {
+      case 'REQUESTED':
+        percent = 100.0 / 3;
+        word = 'Requested';
+        break;
+      case 'ORDERED':
+        percent = 200.0 / 3;
+        word = 'Ordered'
+        showOrdered = true;
+        break;
+      case 'DELIVERED':
+        percent = 100.0;
+        word = 'Delivered'
+        showOrdered = true;
+        showDelivered = true;
+        break;
+      default:
+        percent = 0.0;
+    }
+
+
+    return (
+      <div>
+        <ProgressBar
+          percent={percent}
+          filledBackground="linear-gradient(to right, #8b78ed, #3c2e87)"
+          height={15}
+        >
+          <Step transition="scale">
+            {({accomplished}) => (
+              null
+            )}
+          </Step>
+          <Step transition="scale">
+            {({accomplished}) => (
+              <StepHolder>
+                <img
+                  style={{filter: `grayscale(${accomplished ? 0 : 80}%)`}}
+                  width="40"
+                  src={popcorn}
+                />
+                {snack.request_date && moment(snack.request_date).format("MM/DD/YY")}
+              </StepHolder>
+            )}
+          </Step>
+          <Step transition="scale">
+            {({accomplished}) => (
+              <StepHolder>
+                <img
+                  style={{filter: `grayscale(${accomplished ? 0 : 80}%)`}}
+                  width="40"
+                  src={truck}
+                />
+                {showOrdered && moment(snack.order_date).format("MM/DD/YY")}
+              </StepHolder>
+            )}
+          </Step>
+          <Step transition="scale">
+            {({accomplished}) => (
+              <StepHolder>
+                <img
+                  style={{filter: `grayscale(${accomplished ? 0 : 80}%)`}}
+                  width="40"
+                  src={mailbox}
+                />
+                {showDelivered && moment(snack.delivery_date).format("MM/DD/YY")}
+              </StepHolder>
+            )}
+          </Step>
+        </ProgressBar>
+        {word && (
+          <StatusWidget>
+            Status: {word}
+          </StatusWidget>)}
+      </div>
+    );
   }
 
   render() {
@@ -53,6 +148,11 @@ class OneSnack extends React.Component {
             <ItemLabel>{snack.full_name}</ItemLabel>
             <Button onClick={() => this.requestItem()} disabled={requested} variant={variant} >{buttonStr}</Button>
 
+            <HolderHolder>
+              <ProgressBarHolder>
+                {this.renderProgressBar()}
+              </ProgressBarHolder>
+            </HolderHolder>
           </SnackContainer>
           <UserLikesContainer>
             <h5>Users Who Like</h5>
@@ -120,6 +220,25 @@ const Avatar = styled.img`
   margin: 5px;
 `;
 
+
+const ProgressBarHolder = styled.div`
+  width: 600px;
+  margin: 40px;
+`;
+
+const HolderHolder = styled.div`
+  display: inline-flex;
+`;
+
+const StatusWidget = styled.h4`
+  margin: 40px;
+`;
+
+const StepHolder = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 export default OneSnack;
 
