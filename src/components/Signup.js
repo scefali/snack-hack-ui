@@ -8,25 +8,25 @@ import {redirect_uri} from '../api';
 
 
 class Signup extends React.Component {
-    signIn() {
-        let url = buildUrl('https://slack.com', {
-            path: 'oauth/authorize',
-            queryParams: {
-                client_id: '2169437334.672763992981',
-                scope: 'identity.basic identity.avatar',
-                redirect_uri
-            }
-        });
-        window.location.replace(url);
-    }
-    render() {
-        return (
-            <Container>
-                <LoginHeader>Snack Hack Login</LoginHeader>
-                <LoginImage onClick={() => this.signIn()} src={slackSignIn} />
-            </Container>
-        )
-    }
+  signIn() {
+    let url = buildUrl('https://slack.com', {
+      path: 'oauth/authorize',
+      queryParams: {
+        client_id: '2169437334.672763992981',
+        scope: 'identity.basic identity.avatar',
+        redirect_uri
+      }
+    });
+    window.location.replace(url);
+  }
+  render() {
+    return (
+      <Container>
+        <LoginHeader>Snack Hack Login</LoginHeader>
+        <LoginImage onClick={() => this.signIn()} src={slackSignIn} />
+      </Container>
+    )
+  }
 }
 
 

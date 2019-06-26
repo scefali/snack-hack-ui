@@ -3,33 +3,35 @@ import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
 
 import * as api from '../api';
-import * as util from '../util';
 
 
 class OneSnack extends React.Component {
   state = {
     snack: null,
-    requested: false
+    requested: false,
+    liked: false
+  }
+  get snackId() {
+    return this.props.match.params.snackId;
   }
   async componentDidMount() {
-    const {snackId} = this.props.match.params;
+    const snackId = this.snackId;
     const snack = await api.getSnackInfo(snackId);
-    const requested = !!snack.requested;
-    this.setState({snack, requested})
+    const requested = ['ORDERED', 'REQUESTED'].indexOf(snack.current_state) > -1;
+    const liked = snack.user_liked;
+    this.setState({snack, requested, liked})
   }
 
   async requestItem() {
-    this.setState({requested: true})
+    this.setState({requested: true});
+    await api.requestSnack(this.snackId)
   }
 
-  goBack() {
-    util.relativeRedirect('snacks');
-  }
 
   renderOneLike(userLike) {
     return (
       <OneLikeContainer>
-        <Avatar src={userLike.avatar}/>
+        <Avatar src={userLike.avatar} />
         {userLike.name}
       </OneLikeContainer>
     )
@@ -44,7 +46,6 @@ class OneSnack extends React.Component {
     const buttonStr = requested ? 'Requested' : 'Request'
     return (
       <Container>
-        <BackButton onClick={() => this.goBack()}><i className="fa fa-arrow-left">Back</i></BackButton>
         <Holder>
           <SnackContainer>
             <ItemHeader>{snack.name}</ItemHeader>
@@ -70,6 +71,8 @@ const Container = styled.div`
 `;
 
 const SnackContainer = styled.div`
+  max-width: 600px;
+  margin-bottom: 20px;
 `;
 
 
@@ -84,16 +87,15 @@ const Holder = styled.div`
 const UserLikesContainer = styled.div`
   margin-top: 70px;
   margin-left: 15px;
+  display: block;
 `;
 
-const OneLikeContainer = styled.div``;
-
-const BackButton = styled.button`
-  right: 250px;
-  position: relative;
-  color: #007bff;
-  border-color: #007bff;
+const OneLikeContainer = styled.div`
+  float: left;
+  display: block;
+  clear: left
 `;
+
 
 const ItemHeader = styled.h2`
   display: block;
@@ -113,8 +115,9 @@ const ItemImage = styled.img`
 
 
 
-const Avatar = styled.image`
-  width: 25px;
+const Avatar = styled.img`
+  width: 40px;
+  margin: 5px;
 `;
 
 

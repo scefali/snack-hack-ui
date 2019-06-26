@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import * as api from '../api';
+import SnackLike from './SnackLike';
 import {relativeRedirect} from '../util';
 
 
@@ -32,11 +33,7 @@ class OneSnack extends React.Component {
         <ItemImage onClick={() => this.goToSnackOverview()} src={image} />
         <ItemLabel onClick={() => this.goToSnackOverview()}>{name}</ItemLabel>
         {like_count}
-        <div className="like-content">
-          <button className="btn-secondary like-review" onClick={() => this.toggleLike()}>
-            <i className={`fa fa-heart ${extraClass}`} />{text}
-          </button>
-        </div>
+        <SnackLike onClick={() => this.toggleLike()} liked={liked} />
       </Container>
     )
   }

@@ -2,13 +2,16 @@ import React from 'react';
 import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
+import Nav from 'react-bootstrap/Nav';
 import './App.css';
 
-import {getSessionToken, logout, relativeRedirect} from './util';
+import {getSessionToken, logout, relativeRedirect, isAdmin} from './util';
 import Signup from './components/Signup'
 import Oauth from './components/Oauth'
 import Snacks from './components/Snacks'
 import SnackOverview from './components/SnackOverview'
+import Requests from './components/Requests'
+import Orders from './components/Orders'
 
 class App extends React.Component {
   componentDidMount() {
@@ -23,6 +26,40 @@ class App extends React.Component {
     logout();
     relativeRedirect('signup');
   }
+  goBack() {
+    window.history.back();
+  }
+  renderAdminNavBar() {
+    if (!getSessionToken() || !isAdmin()) {
+      return null;
+    }
+    return (
+      <NavHolder>
+        <Nav variant="pills" >
+          <Nav.Item>
+            <Nav.Link href="/snacks">Snacks</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href="/requests">Requests</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href="/orders">Orders</Nav.Link>
+          </Nav.Item>
+        </Nav>
+      </NavHolder>
+    )
+  }
+  renderBackButton() {
+    if (['/oauth', '/signup', '/snacks'].includes(window.location.pathname)) {
+      return null;
+    }
+    return (
+      <BackButtonContainer >
+        <Button id="back-button" variant="outline-primary" onClick={() => this.goBack()}>Back</Button >
+      </BackButtonContainer>
+    )
+  }
+
   renderLogout() {
     if (!getSessionToken()) {
       return null;
@@ -37,7 +74,13 @@ class App extends React.Component {
     const redirectUrl = getSessionToken() ? '/snacks' : 'signup';
     return (
       <div className="App">
-        {this.renderLogout()}
+        <TopHolder>
+          <LogoutAndBack>
+            {this.renderLogout()}
+            {this.renderBackButton()}
+          </LogoutAndBack>
+          {this.renderAdminNavBar()}
+        </TopHolder>
         <Container>
           <Router>
             <Switch>
@@ -45,6 +88,8 @@ class App extends React.Component {
               <Route path="/snacks/:snackId" component={SnackOverview} />
               <Route path="/snacks" component={Snacks} />
               <Route path="/signup" component={Signup} />
+              <Route path="/requests" component={Requests} />
+              <Route path="/orders" component={Orders} />
               <Redirect to={redirectUrl} />
             </Switch>
           </Router>
@@ -57,22 +102,30 @@ class App extends React.Component {
 export default App;
 
 
-// const LogoutContainer = styled.div`
-//   float: right;
-//   margin-right: 100px;
-//   position: absolute;
-// `;
-
 const LogoutContainer = styled.div`
   right: 3%;
   top: 3%;
   position: absolute;
 `;
 
+const BackButtonContainer = styled.div`
+  left: 3%;
+  top: 3%;
+  position: absolute;
+`;
+
+
+
 const Container = styled.div`
-  width: 90%;
 `;
 
-const LogoutButton = styled.button`
 
+const NavHolder = styled.div`
 `;
+
+const TopHolder = styled.div`
+  display: inline-flex;
+`;
+
+
+const LogoutAndBack = styled.div``;
