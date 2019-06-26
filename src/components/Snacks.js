@@ -37,7 +37,7 @@ const Container = styled.div`
     width: 100%;
     padding-right: 15px;
     padding-left: 15px;
-    margin-top: 50px;
+    margin-top: 20px;
 `;
 
 const ProductContainer = styled.div`

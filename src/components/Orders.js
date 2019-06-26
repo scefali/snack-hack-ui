@@ -88,7 +88,7 @@ class Orders extends React.Component {
     const buttonActive = this.hasItemsSelected();
     return (
       <Container>
-        <h3>Deliveries</h3>
+        <Header>Deliveries</Header>
         <Holder>
           <SnackTable border="1">
             <thead>
@@ -120,6 +120,9 @@ class Orders extends React.Component {
   }
 }
 
+const Header = styled.h3`
+  margin-top: 20px;
+`;
 
 
 const Container = styled.div`

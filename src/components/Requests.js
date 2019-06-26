@@ -107,7 +107,7 @@ class Requests extends React.Component {
     const buttonActive = this.hasItemsSelected();
     return (
       <Container>
-        <h3>Requests</h3>
+        <Header>Requests</Header>
         <Holder>
           <SnackTable border="1">
             <thead>
@@ -143,6 +143,10 @@ class Requests extends React.Component {
 }
 
 
+
+const Header = styled.h3`
+  margin-top: 20px;
+`;
 
 const Container = styled.div`
     width: 100%;

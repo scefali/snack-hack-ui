@@ -28,7 +28,9 @@ class OneSnack extends React.Component {
     const {image, name, full_name} = this.props.snack;
     return (
       <Container >
-        <ItemImage data-toggle="tooltip" title={full_name} onClick={() => this.goToSnackOverview()} src={image} />
+        <ImageHolder>
+          <ItemImage data-toggle="tooltip" title={full_name} onClick={() => this.goToSnackOverview()} src={image} />
+        </ImageHolder>
         <TextHolder>
           <ItemLabel onClick={() => this.goToSnackOverview()}>{name}</ItemLabel>
         </TextHolder>
@@ -47,7 +49,7 @@ const Container = styled.div`
     background-image: radial-gradient(50% 50%, rgba(55, 62, 62, 0.00) 50%, rgba(55, 62, 62, 0.01) 74%, rgba(55, 62, 62, 0.05) 100%);
     box-shadow: 10px 10px #dadada;
     width: 230px;
-    height: 275px;
+    height: 230px;
     position: relative;
     border-radius: 12px;
     &:hover {
@@ -64,15 +66,25 @@ const ItemLabel = styled.label`
 `;
 
 const ItemImage = styled.img`
-    max-height: 130px;
+    max-height: 110px;
     max-width: 200px;
     &:hover {
         cursor: pointer;
     }
 `;
 
+const ImageHolder = styled.div`
+    margin: auto;
+`;
+
 
 const TextHolder = styled.div`
+  bottom: 58px;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0px;
+  right: 0px;
 `;
 
 

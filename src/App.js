@@ -55,7 +55,7 @@ class App extends React.Component {
     )
   }
   renderBackButton() {
-    if (['/oauth', '/signup', '/snacks'].includes(window.location.pathname)) {
+    if (['/oauth', '/signup'].includes(window.location.pathname)) {
       return null;
     }
     return (
