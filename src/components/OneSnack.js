@@ -25,17 +25,14 @@ class OneSnack extends React.Component {
 
   render() {
     const {liked, like_count} = this.state;
-    const {image, name} = this.props.snack;
-    const text = liked ? 'Unlike' : 'Like'
-    const extraClass = liked ? 'already-liked' : '';
+    const {image, name, full_name} = this.props.snack;
     return (
       <Container >
-        <ItemImage onClick={() => this.goToSnackOverview()} src={image} />
+        <ItemImage data-toggle="tooltip" title={full_name} onClick={() => this.goToSnackOverview()} src={image} />
         <TextHolder>
           <ItemLabel onClick={() => this.goToSnackOverview()}>{name}</ItemLabel>
-          {like_count}
         </TextHolder>
-        <SnackLike onClick={() => this.toggleLike()} liked={liked} />
+        <SnackLike like_count={like_count} onClick={() => this.toggleLike()} liked={liked} />
       </Container>
     )
   }

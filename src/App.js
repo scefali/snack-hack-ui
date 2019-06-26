@@ -34,8 +34,8 @@ class App extends React.Component {
   goBack() {
     window.history.back();
   }
-  renderAdminNavBar() {
-    if (!getSessionToken() || !isAdmin()) {
+  renderNavBar() {
+    if (!getSessionToken()) {
       return null;
     }
     return (
@@ -71,7 +71,7 @@ class App extends React.Component {
     }
     return (
       <LogoutContainer >
-        <Button id="logout-button" variant="outline-primary" onClick={() => this.logout()}>Logout</Button >
+        <Button id="logout-button" variant="outline-danger" onClick={() => this.logout()}>Logout</Button >
       </LogoutContainer>
     )
   }
@@ -84,7 +84,7 @@ class App extends React.Component {
             {this.renderLogout()}
             {this.renderBackButton()}
           </LogoutAndBack>
-          {this.renderAdminNavBar()}
+          {this.renderNavBar()}
         </TopHolder>
         <Container>
           <Router>

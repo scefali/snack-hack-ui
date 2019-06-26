@@ -6,6 +6,7 @@ import moment from 'moment';
 
 
 import {getSnacks, orderSnacks} from '../api';
+import {isAdmin} from '../util';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 
@@ -83,10 +84,10 @@ class Requests extends React.Component {
         <SnackItem>
           {snack.like_count}
         </SnackItem>
-        <SnackItem>
+        {isAdmin() && < SnackItem >
           <OrderCheckbox checked={this.state.orderedMap[snack.id] || false}
             type="checkbox" onChange={e => this.onOrderedToggle(snack.id)} />
-        </SnackItem>
+        </SnackItem>}
       </OneSnack>
     )
   }
@@ -121,11 +122,11 @@ class Requests extends React.Component {
                   Last Delivered
                 </th>
                 <th>
-                  Likes
+                  Follows
                 </th>
-                <th>
+                {isAdmin() && < th >
                   Ordered
-              </th>
+                </th>}
               </tr>
             </thead>
             <tbody>
@@ -133,9 +134,9 @@ class Requests extends React.Component {
             </tbody>
           </SnackTable>
         </Holder>
-        <ButtonHolder>
+        {isAdmin() && <ButtonHolder>
           <Button disabled={!buttonActive} onClick={this.orderItems}>{this.renderButtonText()}</Button>
-        </ButtonHolder>
+        </ButtonHolder>}
       </Container>
     )
   }
@@ -161,7 +162,7 @@ const Holder = styled.div`
 
 const SnackItem = styled.td`
   max-width: 350px;
-  min-width: 50px;
+  min-width: 100px;
   border: 1px solid black;
   border: 1px solid black;
 `;

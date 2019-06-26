@@ -5,7 +5,9 @@ import forEach from 'lodash/forEach'
 import {getSnacks, deliverSnacks} from '../api';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
+import moment from 'moment';
 
+import {isAdmin} from '../util';
 
 
 
@@ -61,9 +63,12 @@ class Orders extends React.Component {
           {snack.full_name}
         </SnackItem>
         <SnackItem>
+          {moment(snack.ordered_date).format("MM/DD/YY")}
+        </SnackItem>
+        {isAdmin() && <SnackItem>
           <OrderCheckbox checked={this.state.deliveredMap[snack.id] || false}
             type="checkbox" onChange={e => this.onDeliveredToggle(snack.id)} />
-        </SnackItem>
+        </SnackItem>}
       </OneSnack>
     )
   }
@@ -95,8 +100,11 @@ class Orders extends React.Component {
                   Name
                 </th>
                 <th>
+                  Ordered
+                </th>
+                {isAdmin() && <th>
                   Delivered
-              </th>
+                </th>}
               </tr>
             </thead>
             <tbody>
@@ -104,9 +112,9 @@ class Orders extends React.Component {
             </tbody>
           </SnackTable>
         </Holder>
-        <ButtonHolder>
+        {isAdmin() && <ButtonHolder>
           <Button disabled={!buttonActive} onClick={this.orderItems}>{this.renderButtonText()}</Button>
-        </ButtonHolder>
+        </ButtonHolder>}
       </Container>
     )
   }
@@ -132,6 +140,7 @@ const Holder = styled.div`
 
 const SnackItem = styled.td`
   max-width: 350px;
+  min-width: 100px;
   border: 1px solid black;
   border: 1px solid black;x
 `;
