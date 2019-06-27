@@ -14,7 +14,7 @@ import Spinner from 'react-bootstrap/Spinner';
 
 
 class Requests extends React.Component {
-  state = {snacks: [], orderedMap: {}, loading: false};
+  state = {snacks: [], orderedMap: {}, loading: false, initialized: false};
   constructor() {
     super(...arguments);
     autobind(this);
@@ -22,6 +22,8 @@ class Requests extends React.Component {
 
   async componentDidMount() {
     await this.loadSnacks();
+    this.setState({initialized: true})
+    setInterval(() => this.loadSnacks(), 1000 * 60 * 10)
   }
 
   async loadSnacks() {
@@ -103,30 +105,29 @@ class Requests extends React.Component {
     return this.getSelectedSnackIds().length > 0;
   }
 
-  render() {
+  renderCore() {
     const buttonActive = this.hasItemsSelected();
     return (
-      <Container>
-        <Header>Requests</Header>
+      <div>
         <Holder>
           <SnackTable border="1">
             <thead>
               <tr>
                 <th>
                   Image
-                </th>
+            </th>
                 <th>
                   Name
-                </th>
+            </th>
                 <th>
                   Last Delivered
-                </th>
+            </th>
                 <th>
                   Follows
-                </th>
+            </th>
                 {isAdmin() && < th >
                   Ordered
-                </th>}
+            </th>}
               </tr>
             </thead>
             <tbody>
@@ -137,6 +138,15 @@ class Requests extends React.Component {
         {isAdmin() && <ButtonHolder>
           <Button disabled={!buttonActive} onClick={this.orderItems}>{this.renderButtonText()}</Button>
         </ButtonHolder>}
+      </div>
+    )
+  }
+
+  render() {
+    return (
+      <Container>
+        <Header>Requests</Header>
+        {this.state.initialized ? this.renderCore() : 'Loading...'}
       </Container>
     )
   }

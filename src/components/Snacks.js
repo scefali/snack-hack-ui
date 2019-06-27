@@ -7,8 +7,14 @@ import OneProduct from './OneSnack';
 
 
 class Snacks extends React.Component {
-  state = {snacks: []}
+  state = {snacks: [], initialized: false}
   async componentDidMount() {
+    await this.loadSnacks();
+    this.setState({initialized: true})
+    setInterval(() => this.loadSnacks(), 1000 * 60 * 10)
+  }
+
+  async loadSnacks() {
     const snacks = await getSnacks();
     this.setState({snacks})
   }
@@ -19,13 +25,19 @@ class Snacks extends React.Component {
     )
   }
 
+  renderCore() {
+    return (
+      <ProductContainer>
+        {this.state.snacks.map(this.renderSnack)}
+      </ProductContainer>
+    )
+  }
+
   render() {
     return (
       <Container>
         <Header >Snacks</Header>
-        <ProductContainer>
-          {this.state.snacks.map(this.renderSnack)}
-        </ProductContainer>
+        {this.state.initialized ? this.renderCore() : 'Loading...'}
       </Container>
     )
   }

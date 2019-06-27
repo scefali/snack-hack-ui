@@ -12,7 +12,7 @@ import {isAdmin} from '../util';
 
 
 class Orders extends React.Component {
-  state = {snacks: [], deliveredMap: {}, loading: false};
+  state = {snacks: [], deliveredMap: {}, loading: false, initialized: false};
   constructor() {
     super(...arguments);
     autobind(this);
@@ -20,6 +20,8 @@ class Orders extends React.Component {
 
   async componentDidMount() {
     await this.loadSnacks();
+    this.setState({initialized: true})
+    setInterval(() => this.loadSnacks(), 1000 * 60 * 10)
   }
 
   async loadSnacks() {
@@ -84,11 +86,10 @@ class Orders extends React.Component {
     return this.getSelectedSnackIds().length > 0;
   }
 
-  render() {
+  renderCore() {
     const buttonActive = this.hasItemsSelected();
     return (
-      <Container>
-        <Header>Deliveries</Header>
+      <div>
         <Holder>
           <SnackTable border="1">
             <thead>
@@ -115,6 +116,15 @@ class Orders extends React.Component {
         {isAdmin() && <ButtonHolder>
           <Button disabled={!buttonActive} onClick={this.orderItems}>{this.renderButtonText()}</Button>
         </ButtonHolder>}
+      </div>
+    )
+  }
+
+  render() {
+    return (
+      <Container>
+        <Header>Orders</Header>
+        {this.state.initialized ? this.renderCore() : 'Loading...'}
       </Container>
     )
   }

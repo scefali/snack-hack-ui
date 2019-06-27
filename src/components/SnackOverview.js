@@ -24,6 +24,7 @@ class OneSnack extends React.Component {
 
   async componentDidMount() {
     await this.loadSnack();
+    setInterval(() => this.loadSnack(), 1000 * 60 * 10)
   }
 
   async loadSnack() {
