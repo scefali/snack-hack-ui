@@ -54,7 +54,7 @@ class OneSnack extends React.Component {
     return (
       <OneLikeContainer>
         <Avatar src={userLike.avatar} />
-        {userLike.name}
+        <UserName>{userLike.name}</UserName>
       </OneLikeContainer>
     )
   }
@@ -170,7 +170,9 @@ class OneSnack extends React.Component {
           </SnackContainer>
           <UserLikesContainer>
             <h5>Users Who Follow</h5>
-            {snack.user_likes.map(this.renderOneLike)}
+            <UserLikesCore>
+              {snack.user_likes.map(this.renderOneLike)}
+            </UserLikesCore>
           </UserLikesContainer>
         </Holder>
       </Container>
@@ -203,6 +205,14 @@ const SnackContainer = styled.div`
   margin-bottom: 20px;
 `;
 
+const UserLikesCore = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
+const UserName = styled.div`
+`;
 
 const Holder = styled.div`
   display: flex;
@@ -220,8 +230,9 @@ const UserLikesContainer = styled.div`
 
 const OneLikeContainer = styled.div`
   float: left;
-  display: block;
-  clear: left
+  display: flex;
+  clear: left;
+  align-items: center;
 `;
 
 
@@ -238,10 +249,10 @@ const ItemImageHolder = styled.div`
 `;
 
 const ItemImage = styled.img`
-display: block;
-max-height: 400px;
-max-width: 400px;
-margin:auto;
+  display: block;
+  max-height: 400px;
+  max-width: 400px;
+  margin:auto;
 `;
 
 
@@ -249,6 +260,7 @@ margin:auto;
 const Avatar = styled.img`
   width: 40px;
   margin: 5px;
+  float: left;
 `;
 
 

@@ -25,8 +25,10 @@ class Orders extends React.Component {
   }
 
   async loadSnacks() {
-    const snacks = await getSnacks('ORDERED');
-    //TODO: add ordering
+    let snacks = await getSnacks('ORDERED');
+    snacks = snacks.sort((a, b) => {
+      return moment(a.order_date) - moment(b.order_date);
+    })
     this.setState({snacks})
   }
 
@@ -56,6 +58,7 @@ class Orders extends React.Component {
   }
 
   renderSnack(snack) {
+    console.log('ord', snack.order_date)
     return (
       <OneSnack key={snack.id}>
         <SnackItem>
@@ -65,7 +68,7 @@ class Orders extends React.Component {
           {snack.full_name}
         </SnackItem>
         <SnackItem>
-          {moment(snack.ordered_date).format("MM/DD/YY")}
+          {moment(snack.order_date).format("MM/DD/YY")}
         </SnackItem>
         {isAdmin() && <SnackItem>
           <OrderCheckbox checked={this.state.deliveredMap[snack.id] || false}
