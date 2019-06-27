@@ -5,7 +5,7 @@ import moment from 'moment';
 import "react-step-progress-bar/styles.css";
 import {ProgressBar, Step} from "react-step-progress-bar";
 
-
+import SnackLike from './SnackLike';
 import * as api from '../api';
 import popcorn from '../images/popcorn.png';
 import truck from '../images/truck.png';
@@ -38,6 +38,13 @@ class OneSnack extends React.Component {
   async requestItem() {
     this.setState({requested: true});
     await api.requestSnack(this.snackId);
+    await this.loadSnack();
+  }
+
+  async toggleLike() {
+    const fn = this.state.liked ? api.unlikeSnack : api.likeSnack;
+    this.setState({liked: !this.state.liked});
+    await fn(this.snackId);
     await this.loadSnack();
   }
 
@@ -141,15 +148,18 @@ class OneSnack extends React.Component {
     const buttonStr = requested ? 'Requested' : 'Request'
     return (
       <Container>
+        <ItemHeader>{snack.name}</ItemHeader>
         <Holder>
           <SnackContainer>
-            <ItemHeader>{snack.name}</ItemHeader>
             <ItemImageHolder>
-                {/* <i className="fa fa-heart" /> */}
+              <LikeIcon onClick={() => this.toggleLike()} liked={this.state.liked} className="fa fa-heart" />
               <ItemImage src={snack.image} />
             </ItemImageHolder>
             <ItemLabel>{snack.full_name}</ItemLabel>
-            <Button onClick={() => this.requestItem()} disabled={requested} variant={variant} >{buttonStr}</Button>
+
+            <ButtonHolder>
+              <Button onClick={() => this.requestItem()} disabled={requested} variant={variant} >{buttonStr}</Button>
+            </ButtonHolder>
 
             <HolderHolder>
               <ProgressBarHolder>
@@ -158,7 +168,7 @@ class OneSnack extends React.Component {
             </HolderHolder>
           </SnackContainer>
           <UserLikesContainer>
-            <h5>Users Who Like</h5>
+            <h5>Users Who Follow</h5>
             {snack.user_likes.map(this.renderOneLike)}
           </UserLikesContainer>
         </Holder>
@@ -168,6 +178,20 @@ class OneSnack extends React.Component {
 }
 
 
+const ButtonHolder = styled.div``;
+
+
+const LikeIcon = styled.i`
+  position: relative;
+  left: 30%;
+  &:hover {
+      cursor: pointer;
+  }
+  &:before {
+    color: ${props => props.liked ? "#ed2553" : "gray"};a
+  }
+  font-size: 1.5em;
+`;
 
 const Container = styled.div`
   margin: auto;

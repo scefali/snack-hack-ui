@@ -55,3 +55,13 @@ export const orderSnacks = async (snack_ids) => {
 export const deliverSnacks = async (snack_ids) => {
   await serverApi.post('/deliver', {snack_ids});
 }
+
+
+export const getUser = async () => {
+  const {data} = await serverApi.get('/user');
+  return data.user;
+}
+
+export const updateNotificationsSettings = async (option, enable) => {
+  await serverApi.post('/notify', {option, enable});
+}
