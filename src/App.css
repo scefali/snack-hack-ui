@@ -47,7 +47,7 @@
   font-family: monospace;
 }
 
-.like-content .btn-secondary {
+#root .like-content .btn-secondary {
   display: block;
   margin: 40px auto 0px;
   text-align: center;
