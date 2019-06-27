@@ -145,7 +145,7 @@ class OneSnack extends React.Component {
     if (!snack) {
       return (<div>Loading...</div>)
     }
-    const variant = requested ? 'outline-dark' : 'outline-primary'
+    const variant = requested ? 'outline-dark' : 'outline-success'
     const buttonStr = requested ? 'Requested' : 'Request'
     return (
       <Container>

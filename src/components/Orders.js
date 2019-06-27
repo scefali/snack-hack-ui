@@ -117,7 +117,7 @@ class Orders extends React.Component {
           </SnackTable>
         </Holder>
         {isAdmin() && <ButtonHolder>
-          <Button disabled={!buttonActive} onClick={this.orderItems}>{this.renderButtonText()}</Button>
+          <Button variant="outline-success" disabled={!buttonActive} onClick={this.orderItems}>{this.renderButtonText()}</Button>
         </ButtonHolder>}
       </div>
     )
@@ -126,7 +126,6 @@ class Orders extends React.Component {
   render() {
     return (
       <Container>
-        <Header>Orders</Header>
         {this.state.initialized ? this.renderCore() : 'Loading...'}
       </Container>
     )

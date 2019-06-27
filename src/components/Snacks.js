@@ -36,7 +36,6 @@ class Snacks extends React.Component {
   render() {
     return (
       <Container>
-        <Header >Snacks</Header>
         {this.state.initialized ? this.renderCore() : 'Loading...'}
       </Container>
     )
@@ -53,12 +52,12 @@ const Container = styled.div`
 `;
 
 const ProductContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    float: left;
-    align-items: flex-start;
-
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  float: left;
+  align-items: flex-start;
+  justify-content: center;
 `;
 
 const Header = styled.h2``;

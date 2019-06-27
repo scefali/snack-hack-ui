@@ -97,6 +97,10 @@ button:hover, #logout-button:hover {
   cursor: pointer;
 }
 
+#logout-button {
+  height: 40px;
+}
+
 .btn-outline-dark:hover {
   cursor: default;
 }
@@ -111,5 +115,5 @@ input[type='checkbox'] {
 }
 
 input[type='checkbox']:checked {
-  background: #007bff;
+  background: #28a745;
 }

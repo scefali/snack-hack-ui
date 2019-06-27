@@ -3,13 +3,13 @@ import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom
 import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
-import { ToastContainer } from 'react-toastify';
+import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import './App.css';
 
 
-import {getSessionToken, logout, relativeRedirect } from './util';
+import {getSessionToken, logout, relativeRedirect} from './util';
 import Signup from './components/Signup'
 import Oauth from './components/Oauth'
 import Snacks from './components/Snacks'
@@ -17,6 +17,7 @@ import SnackOverview from './components/SnackOverview'
 import Requests from './components/Requests'
 import Orders from './components/Orders'
 import Profile from './components/Profile'
+import popcorn from './images/popcorn.png';
 
 class App extends React.Component {
   async componentDidMount() {
@@ -33,7 +34,7 @@ class App extends React.Component {
     }
   }
   goToProfile() {
-    relativeRedirect('profile');
+    relativeRedirect('settings');
   }
   logout() {
     logout();
@@ -46,9 +47,12 @@ class App extends React.Component {
     if (!getSessionToken()) {
       return null;
     }
+    const activeKey = window.location.pathname;
+
     return (
       <NavHolder>
-        <Nav variant="pills" >
+        <Nav variant="pills" activeKey={activeKey} >
+          <Popcorn src={popcorn} />
           <Nav.Item>
             <Nav.Link href="/snacks">Snacks</Nav.Link>
           </Nav.Item>
@@ -58,20 +62,14 @@ class App extends React.Component {
           <Nav.Item>
             <Nav.Link href="/orders">Orders</Nav.Link>
           </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href="/settings">Settings</Nav.Link>
+          </Nav.Item>
         </Nav>
       </NavHolder>
     )
   }
-  renderBackButton() {
-    if (['/oauth', '/signup'].includes(window.location.pathname)) {
-      return null;
-    }
-    return (
-      <BackButtonContainer >
-        <Button id="back-button" variant="outline-primary" onClick={() => this.goBack()}>Back</Button >
-      </BackButtonContainer>
-    )
-  }
+
 
 
   renderAccountButtons() {
@@ -80,7 +78,6 @@ class App extends React.Component {
     }
     return (
       <LogoutContainer >
-        <Button variant="outline-primary" onClick={() => this.goToProfile()}> Profile</Button >
         <Button id="logout-button" variant="outline-danger" onClick={() => this.logout()}>Logout</Button >
       </LogoutContainer>
     )
@@ -93,7 +90,6 @@ class App extends React.Component {
         <TopHolder>
           <LogoutAndBack>
             {this.renderAccountButtons()}
-            {this.renderBackButton()}
           </LogoutAndBack>
           {this.renderNavBar()}
         </TopHolder>
@@ -106,7 +102,7 @@ class App extends React.Component {
               <Route path="/signup" component={Signup} />
               <Route path="/requests" component={Requests} />
               <Route path="/orders" component={Orders} />
-              <Route path="/profile" component={Profile} />
+              <Route path="/settings" component={Profile} />
               <Redirect to={redirectUrl} />
             </Switch>
           </Router>
@@ -120,11 +116,8 @@ export default App;
 
 
 const LogoutContainer = styled.div`
-  right: 3%;
-  top: 3%;
-  position: absolute;
   button {
-    margin: 10px;
+    margin: 8px 10px;
   }
 `;
 
@@ -141,11 +134,21 @@ const Container = styled.div`
 
 
 const NavHolder = styled.div`
+  margin: 10px;
+  & .nav-item {
+    margin-top: 8px;
+  }
 `;
 
 const TopHolder = styled.div`
-  display: inline-flex;
+
+`;
+
+const Popcorn = styled.img`
+  width: 50px;
 `;
 
 
-const LogoutAndBack = styled.div``;
+const LogoutAndBack = styled.div`
+  float: right
+`;

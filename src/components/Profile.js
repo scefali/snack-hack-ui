@@ -19,6 +19,17 @@ class Profile extends React.Component {
     this.setState({...user})
   }
 
+  getVerb(name) {
+    switch (name) {
+      case 'Request':
+        return 'Requested';
+      case 'Order':
+        return 'Ordered';
+      case 'Delivery':
+        return 'Delivered';
+    }
+  }
+
   getVariableName(name) {
     switch (name) {
       case 'Request':
@@ -45,7 +56,7 @@ class Profile extends React.Component {
     const value = this.state[variableName] || false;
     return (
       <OneSetting>
-        <SettingText>Notify on {name.toLowerCase()}</SettingText>
+        <SettingText>{this.getVerb(name)}</SettingText>
         <SwitchHolder>
           <Toggle checked={value} onChange={() => this.handleSwitchChange(name)} />
         </SwitchHolder>
@@ -69,6 +80,9 @@ class Profile extends React.Component {
           <h4>
             Notification Settings
           </h4>
+          <NotifyHeader>
+            Notify me when an item I am following is:
+          </NotifyHeader>
           <NotificationsContent>
             {this.renderOneOption('Request')}
             {this.renderOneOption('Order')}
@@ -82,7 +96,6 @@ class Profile extends React.Component {
   render() {
     return (
       <div>
-        <Header>Profile</Header>
         {this.state.name ? this.renderMainContent() : 'Loading...'}
       </div>
     )
@@ -102,7 +115,7 @@ const Avatar = styled.img`
 `;
 
 const OneSetting = styled.div`
-  width: 200px;
+  width: 150px;
   padding-top: 5px;
 `;
 
@@ -115,6 +128,7 @@ const NotificationsHolder = styled.div`
 const NotificationsContent = styled.div`
   display: flex;
   flex-direction: column;
+  margin-left: 30px;
 `;
 
 
@@ -133,6 +147,10 @@ const SettingText = styled.span`
 
 const SwitchHolder = styled.span`
   float: right;
+`;
+
+const NotifyHeader = styled.div`
+  font-size: 18px;
 `;
 
 export default Profile;

@@ -136,7 +136,7 @@ class Requests extends React.Component {
           </SnackTable>
         </Holder>
         {isAdmin() && <ButtonHolder>
-          <Button disabled={!buttonActive} onClick={this.orderItems}>{this.renderButtonText()}</Button>
+          <Button variant="outline-success" disabled={!buttonActive} onClick={this.orderItems}>{this.renderButtonText()}</Button>
         </ButtonHolder>}
       </div>
     )
@@ -145,7 +145,6 @@ class Requests extends React.Component {
   render() {
     return (
       <Container>
-        <Header>Requests</Header>
         {this.state.initialized ? this.renderCore() : 'Loading...'}
       </Container>
     )
