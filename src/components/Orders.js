@@ -48,7 +48,7 @@ class Orders extends React.Component {
     this.setState({loading: true})
     await deliverSnacks(snackIds);
     await this.loadSnacks();
-    this.setState({loading: false})
+    this.setState({loading: false, deliveredMap: {}})
   }
 
   onDeliveredToggle(snack_id) {
@@ -91,6 +91,11 @@ class Orders extends React.Component {
 
   renderCore() {
     const buttonActive = this.hasItemsSelected();
+    if (this.state.snacks.length === 0) {
+      return (
+        <h4>No Items</h4>
+      )
+    }
     return (
       <div>
         <Holder>
