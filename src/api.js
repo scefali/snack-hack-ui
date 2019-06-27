@@ -1,5 +1,17 @@
 import axios from 'axios';
+import React from 'react';
+import {toast} from 'react-toastify';
+
+
+import ToastError from './components/ToastError'
 import {getSessionToken} from './util';
+
+
+//configure toast
+toast.configure({
+  autoClose: 5000,
+  draggable: false
+});
 
 // export let serverUrl = 'https://7d98d40e.ngrok.io';
 export let serverUrl = 'https://snackhack-server.herokuapp.com';
@@ -20,6 +32,23 @@ const serverApi = axios.create({
   headers
 });
 
+serverApi.interceptors.response.use(function(response) {
+  // Do something with response data
+  return response;
+}, function(error) {
+  let textLines = [error.message || 'Unknown error'];
+  if (error.config) {
+    if (error.config.method === 'post') {
+      textLines.push('Please refresh and try again')
+    } else {
+      textLines.push('Try refreshing')
+    }
+  }
+  toast.error(<ToastError textLines={textLines} />, {
+    position: toast.POSITION.TOP_CENTER
+  });
+  return Promise.reject(error);
+});
 
 export const finishOauth = async code => {
   const {data} = await serverApi.post('/code', {code, redirect_uri});

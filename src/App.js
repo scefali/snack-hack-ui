@@ -3,10 +3,13 @@ import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom
 import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import './App.css';
 
+
 import {getSessionToken, logout, relativeRedirect } from './util';
-import * as api from './api';
 import Signup from './components/Signup'
 import Oauth from './components/Oauth'
 import Snacks from './components/Snacks'
@@ -86,6 +89,7 @@ class App extends React.Component {
     const redirectUrl = getSessionToken() ? '/snacks' : 'signup';
     return (
       <div className="App">
+        <ToastContainer />
         <TopHolder>
           <LogoutAndBack>
             {this.renderAccountButtons()}
