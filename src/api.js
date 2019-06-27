@@ -94,3 +94,12 @@ export const getUser = async () => {
 export const updateNotificationsSettings = async (option, enable) => {
   await serverApi.post('/notify', {option, enable});
 }
+
+export const addSnack = async (name, full_name, image) => {
+  const { data } = await serverApi.post('/add-snack', {name, full_name, image});
+  return data.snack_id;
+}
+
+export const deleteSnack = async snack_id => {
+  await serverApi.post(`/delete-snack/${snack_id}`);
+}

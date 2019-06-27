@@ -17,6 +17,8 @@ import SnackOverview from './components/SnackOverview'
 import Requests from './components/Requests'
 import Orders from './components/Orders'
 import Profile from './components/Profile'
+import AddSnack from './components/AddSnack'
+
 import popcorn from './images/popcorn.png';
 
 class App extends React.Component {
@@ -32,9 +34,6 @@ class App extends React.Component {
         relativeRedirect('signup');
       }
     }
-  }
-  goToProfile() {
-    relativeRedirect('settings');
   }
   logout() {
     logout();
@@ -55,6 +54,9 @@ class App extends React.Component {
           <Popcorn src={popcorn} />
           <Nav.Item>
             <Nav.Link href="/snacks">Snacks</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href="/add">Add Snack</Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link href="/requests">Requests</Nav.Link>
@@ -103,6 +105,7 @@ class App extends React.Component {
               <Route path="/requests" component={Requests} />
               <Route path="/orders" component={Orders} />
               <Route path="/settings" component={Profile} />
+              <Route path="/add" component={AddSnack} />
               <Redirect to={redirectUrl} />
             </Switch>
           </Router>
@@ -120,13 +123,6 @@ const LogoutContainer = styled.div`
     margin: 8px 10px;
   }
 `;
-
-const BackButtonContainer = styled.div`
-  left: 3%;
-  top: 3%;
-  position: absolute;
-`;
-
 
 
 const Container = styled.div`

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import * as api from '../api';
 import SnackLike from './SnackLike';
-import {relativeRedirect} from '../util';
+import {relativeRedirect, isAdmin} from '../util';
 
 
 class OneSnack extends React.Component {
@@ -28,6 +28,7 @@ class OneSnack extends React.Component {
     const {image, name, full_name} = this.props.snack;
     return (
       <Container >
+        {isAdmin() && <TrashIcon onClick={() => this.props.confirmDelete()} className="fa fa-trash" />}
         <ImageHolder>
           <ItemImage data-toggle="tooltip" title={full_name} onClick={() => this.goToSnackOverview()} src={image} />
         </ImageHolder>
@@ -85,6 +86,17 @@ const TextHolder = styled.div`
   margin-right: auto;
   left: 0px;
   right: 0px;
+`;
+
+const TrashIcon = styled.i`
+  &:before {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  &:hover {
+      cursor: pointer;
+  }
 `;
 
 
