@@ -35,7 +35,9 @@ class OneSnack extends React.Component {
         <TextHolder>
           <ItemLabel onClick={() => this.goToSnackOverview()}>{name}</ItemLabel>
         </TextHolder>
-        <SnackLike like_count={like_count} onClick={() => this.toggleLike()} liked={liked} />
+        <LikeHolder>
+          <SnackLike like_count={like_count} onClick={() => this.toggleLike()} liked={liked} />
+        </LikeHolder>
       </Container>
     )
   }
@@ -97,6 +99,16 @@ const TrashIcon = styled.i`
   &:hover {
       cursor: pointer;
   }
+`;
+
+const LikeHolder = styled.div`
+  display: inline-block;
+  width: 100%;
+  font-size: 18px;
+  text-align: center;
+  position: absolute;
+  bottom: 10px;
+  left: 0px;
 `;
 
 

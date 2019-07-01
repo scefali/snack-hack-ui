@@ -140,6 +140,8 @@ class OneSnack extends React.Component {
     );
   }
 
+  rnder
+
   render() {
     const {snack, requested} = this.state;
     if (!snack) {
@@ -147,6 +149,7 @@ class OneSnack extends React.Component {
     }
     const variant = requested ? 'outline-dark' : 'outline-success'
     const buttonStr = requested ? 'Requested' : 'Request'
+    const like_count = snack.user_likes.length;
     return (
       <Container>
         <ItemHeader>{snack.name}</ItemHeader>
@@ -159,6 +162,11 @@ class OneSnack extends React.Component {
             <ItemLabel>{snack.full_name}</ItemLabel>
 
             <ButtonHolder>
+              <SnackLike
+                like_count={like_count}
+                onClick={() => this.toggleLike()}
+                liked={this.state.liked}
+              />
               <Button onClick={() => this.requestItem()} disabled={requested} variant={variant} >{buttonStr}</Button>
             </ButtonHolder>
 
@@ -181,7 +189,11 @@ class OneSnack extends React.Component {
 }
 
 
-const ButtonHolder = styled.div``;
+const ButtonHolder = styled.div`
+  & > div {
+    margin: 10px;
+  }
+`;
 
 
 const LikeIcon = styled.i`
