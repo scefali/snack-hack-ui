@@ -15,7 +15,8 @@ class Signup extends React.Component {
     const {session_token, is_admin} = await finishOauth(code) || {};
     localStorage.setItem('session_token', session_token);
     localStorage.setItem('is_admin', is_admin ? '1' : '0');
-    util.relativeRedirect('snacks');
+    const redirectUrl = util.getPostSignInUrl() || 'snacks';
+    util.relativeRedirect(redirectUrl);
   }
   render() {
     const message = this.state.error || 'Please wait...';

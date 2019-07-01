@@ -9,7 +9,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
 
-import {getSessionToken, logout, relativeRedirect} from './util';
+import {
+  getSessionToken,
+  logout, 
+  relativeRedirect, 
+  setPostSignInUrl
+} from './util';
 import Signup from './components/Signup'
 import Oauth from './components/Oauth'
 import Snacks from './components/Snacks'
@@ -32,6 +37,7 @@ class App extends React.Component {
     if (!['/oauth', '/signup'].includes(window.location.pathname)) {
       console.log('session token', getSessionToken())
       if (!getSessionToken()) {
+        setPostSignInUrl(window.location.pathname)
         relativeRedirect('signup');
       }
     }
