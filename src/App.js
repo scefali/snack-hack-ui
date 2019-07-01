@@ -30,6 +30,7 @@ class App extends React.Component {
 
     //redirect if not logged in on a product page
     if (!['/oauth', '/signup'].includes(window.location.pathname)) {
+      console.log('session token', getSessionToken())
       if (!getSessionToken()) {
         relativeRedirect('signup');
       }

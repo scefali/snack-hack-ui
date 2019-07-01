@@ -13,9 +13,8 @@ class Signup extends React.Component {
       return this.setState({error: 'You have an error'})
     }
     const {session_token, is_admin} = await finishOauth(code) || {};
-    console.log('aoutah add', is_admin)
-    sessionStorage.setItem('session_token', session_token);
-    sessionStorage.setItem('is_admin', is_admin ? '1' : '0');
+    localStorage.setItem('session_token', session_token);
+    localStorage.setItem('is_admin', is_admin ? '1' : '0');
     util.relativeRedirect('snacks');
   }
   render() {
