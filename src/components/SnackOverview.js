@@ -236,7 +236,7 @@ const Holder = styled.div`
 
 const UserLikesContainer = styled.div`
   margin-top: 70px;
-  margin-left: 15px;
+  margin-left: 40px;
   display: block;
 `;
 
